@@ -1,0 +1,77 @@
+:root {
+    color-scheme: light;
+    --azul-900: #073b55;
+    --azul-800: #0b4f71;
+    --azul-700: #12678b;
+    --azul-100: #e6f2f7;
+    --cinza-900: #253746;
+    --cinza-600: #657783;
+    --cinza-200: #dce5e9;
+    --cinza-100: #f3f6f7;
+    --branco: #ffffff;
+    --verde: #39a87c;
+}
+
+* { box-sizing: border-box; }
+
+html, body { width: 100%; height: 100%; margin: 0; }
+
+body {
+    overflow: hidden;
+    background: var(--cinza-100);
+    color: var(--cinza-900);
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.painel { display: flex; flex-direction: column; height: 100vh; min-height: 540px; }
+
+.cabecalho {
+    display: flex; align-items: center; justify-content: space-between;
+    min-height: 112px; padding: 22px 5vw;
+    color: var(--branco); background: var(--azul-900);
+    border-bottom: 5px solid var(--azul-700);
+}
+
+.identidade-unidade, .cabecalho-historico, .rotulo-secao { display: flex; align-items: center; }
+.identidade-unidade { gap: 18px; }
+.marca { display: grid; place-items: center; width: 48px; height: 48px; border: 2px solid #92c6d9; color: #b9e0ec; font-size: 34px; font-weight: 300; line-height: 1; }
+.eyebrow { margin: 0 0 5px; color: #8db9c9; font-size: .7rem; font-weight: 700; letter-spacing: .16em; }
+h1, h2, p { margin-top: 0; }
+h1 { margin-bottom: 0; font-size: clamp(1.25rem, 2.2vw, 2rem); font-weight: 500; letter-spacing: .01em; }
+.relogio { font-variant-numeric: tabular-nums; font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 300; letter-spacing: .04em; }
+
+.conteudo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 34%); flex: 1; min-height: 0; }
+.chamada-atual { display: flex; flex-direction: column; justify-content: center; min-width: 0; padding: 4vh 6vw; background: var(--branco); }
+.rotulo-secao { gap: 10px; margin-bottom: 4vh; color: var(--azul-800); font-size: .9rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.ponto-status { width: 10px; height: 10px; border-radius: 50%; background: var(--verde); box-shadow: 0 0 0 5px #ddf2e9; }
+.cartao-chamada { padding: clamp(22px, 4vw, 58px); border-left: 8px solid var(--azul-700); background: linear-gradient(135deg, var(--azul-100), #f7fbfc); transition: opacity .18s ease, transform .18s ease; }
+.cartao-chamada.atualizando { opacity: .25; transform: translateY(8px); }
+.texto-apoio { margin-bottom: 1.6rem; color: var(--cinza-600); font-size: clamp(1rem, 1.8vw, 1.45rem); }
+.nome-paciente { max-width: 900px; margin-bottom: clamp(28px, 5vh, 54px); overflow-wrap: anywhere; color: var(--azul-900); font-size: clamp(2.1rem, 5vw, 5.8rem); font-weight: 600; line-height: .98; }
+.senha-destaque { display: flex; align-items: baseline; flex-wrap: wrap; gap: 20px; }
+.legenda-senha { color: var(--azul-700); font-size: clamp(1rem, 1.7vw, 1.45rem); font-weight: 700; letter-spacing: .16em; }
+.senha-destaque strong { color: var(--azul-900); font-size: clamp(4rem, 11vw, 10rem); font-weight: 700; line-height: .8; }
+.status-conexao { margin: 18px 0 0; color: var(--cinza-600); font-size: .82rem; }
+
+.historico { min-width: 0; padding: 4vh 3vw; background: var(--cinza-100); border-left: 1px solid var(--cinza-200); }
+.cabecalho-historico { justify-content: space-between; gap: 14px; padding-bottom: 22px; border-bottom: 1px solid var(--cinza-200); }
+h2 { margin-bottom: 0; color: var(--azul-900); font-size: clamp(1.2rem, 2vw, 1.8rem); font-weight: 600; }
+.contador { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; color: var(--branco); background: var(--azul-700); font-weight: 700; }
+.lista-historico { display: flex; flex-direction: column; gap: 11px; margin: 22px 0 0; padding: 0; list-style: none; }
+.item-historico { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 16px; border: 1px solid var(--cinza-200); border-radius: 3px; background: var(--branco); }
+.item-historico:first-child { border-left: 4px solid var(--azul-700); }
+.historico-nome { min-width: 0; overflow: hidden; color: var(--cinza-900); font-size: clamp(.85rem, 1.2vw, 1.05rem); font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.historico-senha { flex: 0 0 auto; color: var(--azul-800); font-size: 1.3rem; font-weight: 700; }
+.historico-vazio { padding: 20px 0; color: var(--cinza-600); font-size: .95rem; }
+.rodape { padding: 12px 5vw; color: #b9d6df; background: var(--azul-900); font-size: .72rem; letter-spacing: .08em; text-align: right; text-transform: uppercase; }
+
+@media (max-width: 760px) {
+    body { overflow: auto; }
+    .painel { min-height: 100vh; }
+    .cabecalho { min-height: 90px; padding: 16px 5vw; }
+    .marca { width: 36px; height: 36px; font-size: 26px; }
+    .conteudo { display: block; }
+    .chamada-atual, .historico { padding: 32px 7vw; }
+    .historico { border-top: 1px solid var(--cinza-200); border-left: 0; }
+    .rodape { text-align: center; }
+}

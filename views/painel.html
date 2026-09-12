@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b4f71">
+    <title>Painel de Atendimento</title>
+    <link rel="stylesheet" href="../assets/css/estilo.css">
+</head>
+<body>
+    <main class="painel" aria-live="polite">
+        <header class="cabecalho">
+            <div class="identidade-unidade">
+                <span class="marca" aria-hidden="true">+</span>
+                <div>
+                    <p class="eyebrow">ATENDIMENTO AO PACIENTE</p>
+                    <h1>Unidade Básica de Saúde</h1>
+                </div>
+            </div>
+            <time id="relogio" class="relogio" datetime="">00:00</time>
+        </header>
+
+        <div class="conteudo">
+            <section class="chamada-atual" aria-labelledby="titulo-chamada">
+                <div class="rotulo-secao" id="titulo-chamada">
+                    <span class="ponto-status" aria-hidden="true"></span>
+                    <span>Chamada atual</span>
+                </div>
+                <div id="cartao-chamada" class="cartao-chamada">
+                    <p class="texto-apoio">Aguarde sua chamada</p>
+                    <p id="nome-paciente" class="nome-paciente">—</p>
+                    <div class="senha-destaque" aria-label="Senha chamada">
+                        <span class="legenda-senha">SENHA</span>
+                        <strong id="senha-paciente">—</strong>
+                    </div>
+                </div>
+                <p id="status-conexao" class="status-conexao">Conectando ao painel...</p>
+            </section>
+
+            <aside class="historico" aria-labelledby="titulo-historico">
+                <div class="cabecalho-historico">
+                    <div>
+                        <p class="eyebrow">REGISTROS RECENTES</p>
+                        <h2 id="titulo-historico">Últimas chamadas</h2>
+                    </div>
+                    <span id="contador-historico" class="contador">0</span>
+                </div>
+                <ol id="lista-historico" class="lista-historico">
+                    <li class="historico-vazio">Nenhuma chamada registrada.</li>
+                </ol>
+            </aside>
+        </div>
+
+        <footer class="rodape">Acompanhe o painel para sua chamada</footer>
+    </main>
+
+    <!-- Informe aqui a URL e a chave anon pública do Supabase no ambiente de publicação. -->
+    <script>
+        window.PAINEL_CONFIG = {
+            historicoLimite: 8
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://code.responsivevoice.org/responsivevoice.js?key=LxubS8SO"></script>
+    <script src="../assets/js/painel.js"></script>
+</body>
+</html>

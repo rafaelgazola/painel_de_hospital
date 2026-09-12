@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#073b55">
+    <title>Atendimento | Recepção</title>
+    <link rel="stylesheet" href="../assets/css/atendente.css">
+</head>
+<body>
+    <main class="aplicacao-atendente">
+        <header class="cabecalho-atendente">
+            <div class="identidade">
+                <span class="marca" aria-hidden="true">+</span>
+                <div>
+                    <p class="eyebrow">CENTRAL DE ATENDIMENTO</p>
+                    <h1>Painel da Recepção</h1>
+                </div>
+            </div>
+            <a class="link-painel" href="painel.html">Abrir painel TV</a>
+        </header>
+
+        <div class="conteudo-atendente">
+            <section class="cartao-formulario" aria-labelledby="titulo-formulario">
+                <div class="cabecalho-secao">
+                    <div>
+                        <p class="eyebrow">NOVO ATENDIMENTO</p>
+                        <h2 id="titulo-formulario">Chamar paciente</h2>
+                    </div>
+                    <span class="indicador-status" aria-hidden="true"></span>
+                </div>
+
+                <p class="descricao-formulario">Informe o nome do paciente para gerar a próxima senha e inserir a chamada na fila.</p>
+
+                <form id="form-atendimento" novalidate>
+                    <div class="campo">
+                        <label for="nome-paciente">Nome do paciente</label>
+                        <input id="nome-paciente" name="name" type="text" maxlength="50" autocomplete="off" placeholder="Digite o nome completo" required>
+                        <small class="mensagem-campo" data-erro="name"></small>
+                    </div>
+
+                    <button id="botao-enviar" class="botao-enviar" type="submit" disabled>
+                        Gerar Senha / Chamar
+                    </button>
+                </form>
+
+                <div id="mensagem-status" class="mensagem-status" role="status" aria-live="polite"></div>
+            </section>
+
+            <section class="cartao-recentes" aria-labelledby="titulo-recentes">
+                <div class="cabecalho-secao">
+                    <div>
+                        <p class="eyebrow">ACOMPANHAMENTO</p>
+                        <h2 id="titulo-recentes">Chamadas recentes</h2>
+                    </div>
+                    <div class="acoes-cabecalho">
+                        <span id="contador-registros" class="contador-registros">0</span>
+                        <button id="botao-excluir-ultimo" class="botao-acao botao-excluir-ultimo" type="button" disabled>
+                            Excluir Último Paciente
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tabela-wrapper">
+                    <table>
+                        <caption class="visualmente-oculto">Pacientes cadastrados recentemente</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Paciente</th>
+                                <th scope="col">Senha</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-recentes">
+                            <tr>
+                                <td colspan="2" class="tabela-vazia">Nenhum atendimento registrado.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <button id="botao-excluir-todos" class="botao-excluir-todos" type="button" disabled>
+                    Excluir Todos os Pacientes do Dia
+                </button>
+            </section>
+        </div>
+
+        <footer class="rodape-atendente">Uso restrito à equipe de atendimento</footer>
+    </main>
+
+    <script>
+        window.ATENDENTE_CONFIG = { historicoLimite: 10 };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../assets/js/atendente.js"></script>
+</body>
+</html>
