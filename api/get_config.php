@@ -12,50 +12,37 @@ if (strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'GET') {
     exit;
 }
 
-/** Lê somente as configurações públicas necessárias ao painel. */
-function lerConfiguracaoPublica(string $arquivo): array
-{
-    if (!is_readable($arquivo)) {
-        throw new RuntimeException('Arquivo de configuração indisponível.');
-    }
+// 1. Pega do Render (Environment Variables que aparecem na sua foto)
+$url = getenv('SUPABASE_URL') ?: ($_ENV['SUPABASE_URL'] ?? '');
+$key = getenv('SUPABASE_KEY') ?: getenv('SUPABASE_ANON_KEY') ?: ($_ENV['SUPABASE_KEY'] ?? $_ENV['SUPABASE_ANON_KEY'] ?? '');
 
-    $configuracao = [
-        'SUPABASE_URL' => '',
-        'SUPABASE_ANON_KEY' => '',
-        'SUPABASE_KEY' => '',
-    ];
-
-    foreach (file($arquivo, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $linha) {
-        if (preg_match('/^\s*(SUPABASE_URL|SUPABASE_ANON_KEY|SUPABASE_KEY)\s*=\s*(.*?)\s*$/', $linha, $partes) !== 1) {
-            continue;
+// 2. Se estiver no PC local e tiver o arquivo .env, lê dele
+$arquivoEnv = __DIR__ . '/../.env';
+if (($url === '' || $key === '') && is_readable($arquivoEnv)) {
+    foreach (file($arquivoEnv, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $linha) {
+        if (preg_match('/^\s*(SUPABASE_URL|SUPABASE_ANON_KEY|SUPABASE_KEY)\s*=\s*(.*?)\s*$/', $linha, $partes) === 1) {
+            $chave = $partes[1];
+            $valor = trim($partes[2]);
+            if (strlen($valor) >= 2 && (($valor[0] === '"' && $valor[-1] === '"') || ($valor[0] === "'" && $valor[-1] === "'"))) {
+                $valor = substr($valor, 1, -1);
+            }
+            if ($chave === 'SUPABASE_URL' && $url === '') $url = trim($valor);
+            if (($chave === 'SUPABASE_KEY' || $chave === 'SUPABASE_ANON_KEY') && $key === '') $key = trim($valor);
         }
-
-        $valor = trim($partes[2]);
-        if (strlen($valor) >= 2 && (($valor[0] === '"' && $valor[-1] === '"') || ($valor[0] === "'" && $valor[-1] === "'"))) {
-            $valor = substr($valor, 1, -1);
-        }
-        $configuracao[$partes[1]] = trim($valor);
     }
-
-    if ($configuracao['SUPABASE_ANON_KEY'] === '' && $configuracao['SUPABASE_KEY'] !== '') {
-        $configuracao['SUPABASE_ANON_KEY'] = $configuracao['SUPABASE_KEY'];
-    }
-
-    return $configuracao;
 }
 
 try {
-    $configuracao = lerConfiguracaoPublica(__DIR__ . '/../.env');
-    if ($configuracao['SUPABASE_URL'] === '' || $configuracao['SUPABASE_ANON_KEY'] === '') {
-        throw new RuntimeException('Chave publica do Supabase nao encontrada no arquivo .env');
+    if ($url === '' || $key === '') {
+        throw new RuntimeException('Variáveis SUPABASE_URL ou SUPABASE_KEY não foram encontradas.');
     }
 
     echo json_encode([
-        'url' => $configuracao['SUPABASE_URL'],
-        'key' => $configuracao['SUPABASE_ANON_KEY'],
+        'url' => $url,
+        'key' => $key,
     ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
 } catch (Throwable $erro) {
     error_log($erro->getMessage());
     http_response_code(500);
-    echo json_encode(['erro' => 'Chave publica do Supabase nao encontrada no arquivo .env'], JSON_UNESCAPED_UNICODE);
+    echo json_encode(['erro' => 'Configurações do Supabase indisponíveis.'], JSON_UNESCAPED_UNICODE);
 }
