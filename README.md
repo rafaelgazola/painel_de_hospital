@@ -5,8 +5,8 @@ Painel de chamadas de pacientes em tempo real para UBS/hospital. A recepção ge
 ## On-line no RENDER:
 
 Abra no navegador:
-   - Recepção: `https://painel-de-hospital.onrender.com/views/atendente.html`
-   - Painel TV: `https://painel-de-hospital.onrender.com/views/painel.html`
+   - Recepção: https://painel-de-hospital.onrender.com/views/atendente.html
+   - Painel TV: https://painel-de-hospital.onrender.com/views/painel.html
 
 ## Tecnologias
 
