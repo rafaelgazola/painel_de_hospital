@@ -30,7 +30,7 @@ SUPABASE_KEY="sb_publishable_..."
 |---|---|---|
 | `SUPABASE_URL` | sim | URL do projeto Supabase |
 | `SUPABASE_KEY` | sim | Chave anon/publishable pública |
-| `SUPABASE_ANON_KEY` | não | Alias para `SUPABASE_KEY` |
+
 
 No Render, defina as mesmas variáveis no painel de environment variables em vez de usar `.env`.
 
